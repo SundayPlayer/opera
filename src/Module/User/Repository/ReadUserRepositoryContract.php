@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Module\User\Repository;
+namespace Module\User\Repository;
 
 interface ReadUserRepositoryContract
 {

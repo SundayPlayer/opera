@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Bus\CommandBusInterface;
 use App\Bus\CommandBus;
+use App\Bus\CommandBusInterface;
 use App\Bus\QueryBus;
 use App\Bus\QueryBusInterface;
-use App\Module\User\UserUseCase;
 use App\Repository\UserRepository;
 use Illuminate\Support\ServiceProvider;
-use App\Module\User\Command\CreateUserCommand;
-use App\Module\User\Query\FindUserQuery;
-use App\Module\User\Repository\ReadUserRepositoryContract;
-use App\Module\User\Repository\WriteUserRepositoryContract;
+use Module\User\Command\CreateUserCommand;
+use Module\User\Query\FindUserQuery;
+use Module\User\Repository\ReadUserRepositoryContract;
+use Module\User\Repository\WriteUserRepositoryContract;
+use Module\User\UserUseCase;
 
 class AppServiceProvider extends ServiceProvider
 {

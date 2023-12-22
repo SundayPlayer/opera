@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Module\User;
+namespace Module\User;
 
-use App\Module\User\Command\CreateUserCommand;
-use App\Module\User\Query\FindUserQuery;
-use App\Module\User\Repository\ReadUserRepositoryContract;
-use App\Module\User\Repository\WriteUserRepositoryContract;
+use Module\User\Command\CreateUserCommand;
+use Module\User\Query\FindUserQuery;
+use Module\User\Repository\ReadUserRepositoryContract;
+use Module\User\Repository\WriteUserRepositoryContract;
 
 final class UserUseCase
 {

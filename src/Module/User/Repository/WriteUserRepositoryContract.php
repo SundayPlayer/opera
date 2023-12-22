@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Module\User\Repository;
+namespace Module\User\Repository;
 
-use App\Module\User\ValueObject\Email;
+use Module\User\ValueObject\Email;
 
 interface WriteUserRepositoryContract
 {

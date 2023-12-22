@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Module\User\Command;
+namespace Module\User\Command;
 
-use App\Module\User\ValueObject\Email;
+use Module\User\ValueObject\Email;
 
 class CreateUserCommand extends UserCommand
 {

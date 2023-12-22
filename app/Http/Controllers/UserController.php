@@ -7,9 +7,9 @@ namespace App\Http\Controllers;
 use App\Bus\CommandBusInterface;
 use App\Bus\QueryBusInterface;
 use App\Http\Requests\CreateUserRequest;
-use App\Module\User\Command\CreateUserCommand;
-use App\Module\User\Query\FindUserQuery;
-use App\Module\User\ValueObject\Email;
+use Module\User\Command\CreateUserCommand;
+use Module\User\Query\FindUserQuery;
+use Module\User\ValueObject\Email;
 
 class UserController extends Controller
 {
