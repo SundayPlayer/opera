@@ -9,12 +9,11 @@ use App\Bus\CommandBus;
 use App\Bus\QueryBus;
 use App\Bus\QueryBusInterface;
 use App\Module\User\UserUseCase;
+use App\Repository\UserRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Module\User\Command\CreateUserCommand;
 use App\Module\User\Query\FindUserQuery;
-use App\Module\User\Repository\ReadUserRepository;
 use App\Module\User\Repository\ReadUserRepositoryContract;
-use App\Module\User\Repository\WriteUserRepository;
 use App\Module\User\Repository\WriteUserRepositoryContract;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,8 +27,8 @@ class AppServiceProvider extends ServiceProvider
             QueryBusInterface::class => QueryBus::class,
             CommandBusInterface::class => CommandBus::class,
 
-            ReadUserRepositoryContract::class => ReadUserRepository::class,
-            WriteUserRepositoryContract::class => WriteUserRepository::class,
+            ReadUserRepositoryContract::class => UserRepository::class,
+            WriteUserRepositoryContract::class => UserRepository::class,
         ];
 
         foreach ($singletons as $abstract => $concrete) {
