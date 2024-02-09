@@ -4,24 +4,41 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use Module\User\Entity\SimpleUserEntity;
+use Module\User\Entity\UserEntity;
 use Module\User\Repository\ReadUserRepositoryContract;
 use Module\User\Repository\WriteUserRepositoryContract;
 use Module\User\ValueObject\Email;
+use Module\User\ValueObject\UserId;
+use Module\User\ValueObject\Username;
 
 class UserRepository implements ReadUserRepositoryContract, WriteUserRepositoryContract
 {
-    public function show(int $id): ?object
+    public function show(UserId $id): ?UserEntity
     {
-        return DB::table('users')->find($id);
+        /** @var User $user */
+        $user = User::query()->find($id->toNative());
+
+        return $user?->toUserEntity();
     }
 
-    public function create(string $name, Email $email): int
+    public function create(Username $name, Email $email): UserId
     {
-        return DB::table('users')->insertGetId([
-            'name' => $name,
+        $id = User::query()->insertGetId([
+            'name' => $name->toNative(),
             'email' => $email->toNative(),
             'password' => 'test',
         ]);
+
+        return UserId::from($id);
+    }
+
+    public function findByEmail(Email $email): ?SimpleUserEntity
+    {
+        /** @var User $user */
+        $user = User::query()->first(['email' => $email->toNative()]);
+
+        return $user?->toSimpleUserEntity();
     }
 }

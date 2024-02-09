@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Module\User\Command;
+namespace Module\User\Entity;
 
 use Module\User\ValueObject\Email;
+use Module\User\ValueObject\Username;
 
-class CreateUserCommand extends UserCommand
+class UnpersistedUserEntity
 {
     public function __construct(
-        public readonly string $name,
+        public readonly Username $username,
         public readonly Email $email,
     ) {
     }

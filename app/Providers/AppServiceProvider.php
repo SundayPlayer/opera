@@ -10,8 +10,8 @@ use App\Bus\QueryBus;
 use App\Bus\QueryBusInterface;
 use App\Repository\UserRepository;
 use Illuminate\Support\ServiceProvider;
-use Module\User\Command\CreateUserCommand;
-use Module\User\Query\FindUserQuery;
+use Module\User\Input\CreateUserCommand;
+use Module\User\Input\ShowUserQuery;
 use Module\User\Repository\ReadUserRepositoryContract;
 use Module\User\Repository\WriteUserRepositoryContract;
 use Module\User\UserUseCase;
@@ -52,7 +52,7 @@ class AppServiceProvider extends ServiceProvider
         $queryBus = app(QueryBusInterface::class);
 
         $queryBus->register([
-            FindUserQuery::class => [UserUseCase::class, 'find'],
+            ShowUserQuery::class => [UserUseCase::class, 'show'],
         ]);
     }
 }

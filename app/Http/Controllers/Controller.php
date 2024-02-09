@@ -11,9 +11,4 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
-
-    public function responseCreated(): Response
-    {
-        return response()->noContent(SymfonyResponse::HTTP_CREATED);
-    }
 }

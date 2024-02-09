@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Module\User\Query;
+namespace Module\User\Input;
 
 use App\Bus\Query;
 

@@ -7,9 +7,13 @@ namespace App\Http\Controllers;
 use App\Bus\CommandBusInterface;
 use App\Bus\QueryBusInterface;
 use App\Http\Requests\CreateUserRequest;
-use Module\User\Command\CreateUserCommand;
-use Module\User\Query\FindUserQuery;
-use Module\User\ValueObject\Email;
+use App\Presentation\User\ShowUserHtmlPresenter;
+use App\Presentation\User\UserCreatedHtmlPresenter;
+use App\View\User\CreatedUserHtmlView;
+use App\View\User\ShowUserHtmlView;
+use Illuminate\View\View;
+use Module\User\Input\CreateUserCommand;
+use Module\User\Input\ShowUserQuery;
 
 class UserController extends Controller
 {
@@ -19,22 +23,28 @@ class UserController extends Controller
     ) {
     }
 
-    public function store(CreateUserRequest $request): array
+    public function store(CreateUserRequest $request): View
     {
-        $id = $this->commandBus->execute(
-            new CreateUserCommand(
+        $this->commandBus->execute(
+            (new CreateUserCommand(
                 name: $request->get('name'),
-                email: Email::from($request->get('email')),
-            )
+                email: $request->get('email'),
+            ))
+            ->withPresenter($presenter = new UserCreatedHtmlPresenter())
         );
 
-        return ['id' => $id];
+        return (new CreatedUserHtmlView())->generateView($presenter->getViewModel());
     }
 
-    public function show(int $id)
+    public function show(int $id): View
     {
-        return $this->queryBus->ask(
-            new FindUserQuery($id),
+        $this->queryBus->ask(
+            (new ShowUserQuery(
+                $id,
+            ))
+            ->withPresenter($presenter = new ShowUserHtmlPresenter())
         );
+
+        return (new ShowUserHtmlView())->generateView($presenter->getViewModel());
     }
 }

@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Module\User\Entity\SimpleUserEntity;
+use Module\User\Entity\UserEntity;
+use Module\User\ValueObject\Email;
+use Module\User\ValueObject\UserId;
+use Module\User\ValueObject\Username;
 
 class User extends Authenticatable
 {
@@ -41,5 +45,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'created_at' => 'immutable_datetime',
+        'updated_at' => 'immutable_datetime',
     ];
+
+    public function toSimpleUserEntity(): SimpleUserEntity
+    {
+        return new SimpleUserEntity(
+            id: UserId::from($this->id),
+            username: Username::from($this->name),
+            email: Email::from($this->email)
+        );
+    }
+
+    public function toUserEntity(): UserEntity
+    {
+        return UserEntity::fromSimpleUserEntity(
+            simpleUserEntity: $this->toSimpleUserEntity(),
+            createdAt: $this->createdAt,
+            updatedAt: $this->updatedAt,
+        );
+    }
 }
