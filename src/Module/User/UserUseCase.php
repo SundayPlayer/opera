@@ -58,7 +58,7 @@ final class UserUseCase
         $command->presenter()?->present($response->withUserId($id->toNative()));
     }
 
-    private function validateCreateUserCommand(CreateUserCommand $command, CreateUserResponse &$response): ?UnpersistedUserEntity
+    private function validateCreateUserCommand(CreateUserCommand $command, CreateUserResponse $response): ?UnpersistedUserEntity
     {
         try {
             $username = Username::from($command->name);
