@@ -8,6 +8,9 @@ class CreateUserResponse
 {
     private ?int $userId = null;
 
+    /**
+     * @var string[]
+     */
     private array $errors = [];
 
     public function getUserId(): ?int
@@ -27,6 +30,9 @@ class CreateUserResponse
         return count($this->errors) !== 0;
     }
 
+    /**
+     * @return string[]
+     */
     public function getErrors(): array
     {
         return $this->errors;
