@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Module\User\Input;
 
-use App\Bus\Command; // TODO: Remove this dependency to infrastructure
+use App\Contract\RequestInterface;
 
-abstract class UserCommand extends Command
+abstract class UserCommand implements RequestInterface
 {
 }

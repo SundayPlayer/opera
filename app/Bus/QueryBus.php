@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Bus;
 
+use App\Contract\RequestInterface;
+
 class QueryBus implements QueryBusInterface
 {
     public function __construct(
@@ -11,7 +13,7 @@ class QueryBus implements QueryBusInterface
     ) {
     }
 
-    public function ask(Query $query): mixed
+    public function ask(RequestInterface $query): mixed
     {
         return $this->bus->dispatch($query);
     }
@@ -19,7 +21,7 @@ class QueryBus implements QueryBusInterface
     public function register(array $map): void
     {
         foreach ($map as $key => $callable) {
-            $handler = new MapperHandler($callable);
+            $handler = new PresentableRequestHandler($callable);
             $map[$key] = $handler;
         }
 

@@ -24,30 +24,23 @@ final class UserUseCase
     ) {
     }
 
-    public function show(ShowUserQuery $query): void
+    public function show(ShowUserQuery $query): ShowUserResponse
     {
         if ($user = $this->readUserRepository->show(UserId::from($query->id))) {
-            $response = new ShowUserResponse(
-                userFound: true,
-                user: $user,
-            );
+            return ShowUserResponse::withUser(user: $user);
         } else {
-            $response = new ShowUserResponse(userFound: false);
+            return ShowUserResponse::notFound();
         }
-
-        $query->presenter()?->present($response);
     }
 
-    public function create(CreateUserCommand $command): void
+    public function create(CreateUserCommand $command): CreateUserResponse
     {
         $response = new CreateUserResponse();
 
         $unpersistedUser = $this->validateCreateUserCommand($command, $response);
 
         if (!$unpersistedUser) {
-            $command->presenter()?->present($response);
-
-            return;
+            return $response;
         }
 
         $id = $this->writeUserRepository->create(
@@ -55,7 +48,7 @@ final class UserUseCase
             email: $unpersistedUser->email,
         );
 
-        $command->presenter()?->present($response->withUserId($id->toNative()));
+        return $response->withUserId($id->toNative());
     }
 
     private function validateCreateUserCommand(CreateUserCommand $command, CreateUserResponse $response): ?UnpersistedUserEntity
